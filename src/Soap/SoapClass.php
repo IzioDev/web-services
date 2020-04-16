@@ -2,10 +2,19 @@
 
 namespace App\Soap;
 
+use App\Entity\Secteur;
+use Doctrine\ORM\EntityManager;
+use Psr\Log\LoggerInterface;
+
 class SoapClass
 {
-    public function __construct()
+    private $_em;
+    private $logger;
+
+    public function __construct(EntityManager $entityManager, LoggerInterface $logger)
     {
+        $this->logger = $logger;
+        $this->_em = $entityManager;
     }
 
     /**
@@ -26,5 +35,17 @@ class SoapClass
      */
     public function sumHello(int $a, int $b) : int {
         return (int)($a+$b);
+    }
+
+    /**
+     * Récupère le secteur par l'id
+     * @param int $id L'id du secteur à chercher
+     * @return \App\Entity\Secteur Le secteur trouvé
+     */
+    public function getSecteurById(int $id): \App\Entity\Secteur
+    {
+        $secteur = $this->_em->getRepository(Secteur::class)->findOneBy(["id" => $id]);
+        $this->logger->warning($secteur->getLibelle());
+        return $secteur;
     }
 }

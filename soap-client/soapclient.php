@@ -1,6 +1,13 @@
 <?php
+
+namespace SoapClient;
+
+use SoapClient\Secteur;
+
+require_once("./Secteur.php");
+
 ini_set("soap.wsdl_cache_enabled", "0");
-$options=array('trace'=>1, 'encoding'=>'UTF-8', 'soap_version'=>SOAP_1_2);
+$options=array('trace'=>1, 'encoding'=>'UTF-8', 'soap_version'=>SOAP_1_2, 'classmap' => ['Secteur' => "\SoapClient\Secteur"]);
 try {
     $soapClient = new \SoapClient('http://nginx:80/soap?wsdl', $options);
 } catch (SoapFault $e) {
@@ -14,6 +21,19 @@ try {
     echo '<p>'.$result.'</p>';
     $result = $soapClient->__soapcall("sumHello", array(2,5));
     echo '<p>'.$result.'</p>';
+
+
+    $secteur = $soapClient->__soapcall("getSecteurById", [1]);
+
+    var_dump($secteur);
+
+    $rawResult = $soapClient->__getLastResponse();
+
+    echo '<br>';
+    var_dump($rawResult);
+
+    /*echo '<p>'.$secteur.'</p>';*/
+
 } catch(SoapFault $fault){
     // <xmp> tag displays xml output in html
     echo 'Request : <br/><xmp>',
