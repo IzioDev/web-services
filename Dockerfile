@@ -27,14 +27,18 @@ RUN set -eux; \
 	    icu-dev \
 	    libzip-dev \
 	    zlib-dev \
+	    libxml2-dev \
+        php7-soap \
 	; \
 	\
 	docker-php-ext-configure zip; \
 	docker-php-ext-install -j$(nproc) \
 	    intl \
 	    zip \
-			pdo \
-			pdo_mysql \
+		pdo \
+		pdo_mysql \
+		xml \
+		soap \
 	; \
 	pecl install \
 	    apcu-${APCU_VERSION} \

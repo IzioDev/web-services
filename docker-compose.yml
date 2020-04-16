@@ -44,6 +44,14 @@ services:
     environment:
       - SYMFONY_VERSION
 
+  soap-client:
+    build:
+      context: ./soap-client
+    ports:
+      - '8080:80'
+    volumes:
+      - ./soap-client:/var/www/html
+
   nginx:
     build:
       context: .
