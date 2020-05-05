@@ -6,6 +6,7 @@ namespace App\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Laminas\Soap\AutoDiscover;
+use Laminas\Soap\Wsdl;
 
 class SoapGenController
 {

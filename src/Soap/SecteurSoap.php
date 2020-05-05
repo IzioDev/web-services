@@ -1,8 +1,8 @@
 <?php
 
-namespace SoapClient;
+namespace App\Soap;
 
-class Secteur
+class SecteurSoap
 {
     /**
      * @var int

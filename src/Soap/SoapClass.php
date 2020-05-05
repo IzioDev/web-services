@@ -40,12 +40,12 @@ class SoapClass
     /**
      * Récupère le secteur par l'id
      * @param int $id L'id du secteur à chercher
-     * @return \App\Entity\Secteur Le secteur trouvé
+     * @return \App\Soap\SecteurSoap Le secteur trouvé
      */
-    public function getSecteurById(int $id): \App\Entity\Secteur
+    public function getSecteurById(int $id): \App\Soap\SecteurSoap
     {
         $secteur = $this->_em->getRepository(Secteur::class)->findOneBy(["id" => $id]);
         $this->logger->warning($secteur->getLibelle());
-        return $secteur;
+        return new SecteurSoap($secteur->getId(), $secteur->getLibelle());
     }
 }

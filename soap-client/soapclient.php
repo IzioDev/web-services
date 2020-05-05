@@ -7,7 +7,7 @@ use SoapClient\Secteur;
 require_once("./Secteur.php");
 
 ini_set("soap.wsdl_cache_enabled", "0");
-$options=array('trace'=>1, 'encoding'=>'UTF-8', 'soap_version'=>SOAP_1_2, 'classmap' => ['Secteur' => "\SoapClient\Secteur"]);
+$options=array('trace'=>1, 'encoding'=>'UTF-8', 'soap_version'=>SOAP_1_2, 'classmap' => ['SecteurSoap' => "\SoapClient\Secteur"]);
 try {
     $soapClient = new \SoapClient('http://nginx:80/soap?wsdl', $options);
 } catch (SoapFault $e) {
