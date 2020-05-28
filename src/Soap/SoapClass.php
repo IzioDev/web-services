@@ -3,6 +3,7 @@
 namespace App\Soap;
 
 use App\Entity\Secteur;
+use App\Entity\User;
 use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
 
@@ -38,14 +39,15 @@ class SoapClass
     }
 
     /**
-     * Récupère le secteur par l'id
-     * @param int $id L'id du secteur à chercher
-     * @return \App\Soap\SecteurSoap Le secteur trouvé
+     * Récupère l'utilisateur par l'id
+     * @param int $id L'id de l'utilisateur à chercher
+     * @return \App\Entity\User L'utilisateur trouvé
      */
-    public function getSecteurById(int $id): \App\Soap\SecteurSoap
+    public function getSecteurById(int $id): \App\Entity\User
     {
-        $secteur = $this->_em->getRepository(Secteur::class)->findOneBy(["id" => $id]);
-        $this->logger->warning($secteur->getLibelle());
-        return new SecteurSoap($secteur->getId(), $secteur->getLibelle());
+        $user = $this->_em->getRepository(User::class)->findOneBy(["id" => $id]);
+        $this->logger->warning($user->getUsername());
+        return $user;
+        // return new SecteurSoap($secteur->getId(), $secteur->getLibelle());
     }
 }
