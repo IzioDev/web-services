@@ -3,11 +3,12 @@
 namespace SoapClient;
 
 use SoapClient\Secteur;
+use SoapClient\Command;
 
-require_once("./Secteur.php");
+require_once("./Command.php");
 
 ini_set("soap.wsdl_cache_enabled", "0");
-$options=array('trace'=>1, 'encoding'=>'UTF-8', 'soap_version'=>SOAP_1_2, 'classmap' => ['SecteurSoap' => "\SoapClient\Secteur"]);
+$options=array('trace'=>1, 'encoding'=>'UTF-8', 'soap_version'=>SOAP_1_2, 'classmap' => ['CommandSoap' => "\SoapClient\Command"]);
 try {
     $soapClient = new \SoapClient('http://nginx:80/soap?wsdl', $options);
 } catch (SoapFault $e) {
@@ -23,14 +24,18 @@ try {
     echo '<p>'.$result.'</p>';
 
 
-    $secteur = $soapClient->__soapcall("getSecteurById", [1]);
+    $command = $soapClient->__soapcall("getLastCommandForUserId", [5]);
 
-    var_dump($secteur);
+    echo '<p> id de la dernière commande : '.$command->getId().'</p>';
+    echo '<p> status de la dernière commande : '.$command->getStatus().'</p>';
+    echo '<p> date de la dernière commande : '. $command->getCreatedAt() .'</p>';
+
+    // var_dump($command);
 
     $rawResult = $soapClient->__getLastResponse();
 
     echo '<br>';
-    var_dump($rawResult);
+    // var_dump($rawResult);
 
     /*echo '<p>'.$secteur.'</p>';*/
 

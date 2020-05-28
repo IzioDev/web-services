@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiSubresource;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -23,6 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Command
 {
     /**
+     * @var int
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -30,23 +32,27 @@ class Command
     private $id;
 
     /**
+     * @var string
      * @Assert\NotBlank
      * @ORM\Column(type="string", length=255)
      */
     private $status;
 
     /**
+     * @var DateTime
      * @Assert\NotBlank
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
+     * @var User
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="commands", cascade={"persist"})
      */
     private $user;
 
     /**
+     * @var CommandLine
      * @ORM\OneToMany(targetEntity="App\Entity\CommandLine", mappedBy="command", orphanRemoval=true, cascade={"persist"})
      * @ApiSubresource
      */

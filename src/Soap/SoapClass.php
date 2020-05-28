@@ -39,15 +39,20 @@ class SoapClass
     }
 
     /**
-     * Récupère l'utilisateur par l'id
+     * Récupère la dernière commande de l'utilisateur
      * @param int $id L'id de l'utilisateur à chercher
-     * @return \App\Entity\User L'utilisateur trouvé
+     * @return \App\Soap\CommandSoap La dernière commande de l'utilisateur
      */
-    public function getSecteurById(int $id): \App\Entity\User
+    public function getLastCommandForUserId(int $id): \App\Soap\CommandSoap
     {
         $user = $this->_em->getRepository(User::class)->findOneBy(["id" => $id]);
-        $this->logger->warning($user->getUsername());
-        return $user;
-        // return new SecteurSoap($secteur->getId(), $secteur->getLibelle());
+        $commands = $user->getCommands();
+        $this->logger->warning($commands[0]->getUser()->getEmail());
+
+        $soapCommand = new CommandSoap();
+        $soapCommand->setStatus($commands[0]->getStatus());
+        $soapCommand->setCreatedAt(date_format($commands[0]->getCreatedAt(), 'Y-m-d H:i:s'));
+        $soapCommand->setId($commands[0]->getId());
+        return $soapCommand;
     }
 }
