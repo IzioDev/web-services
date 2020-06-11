@@ -2,7 +2,6 @@
 
 namespace SoapClient;
 
-use SoapClient\Secteur;
 use SoapClient\Command;
 
 require_once("./Command.php");
