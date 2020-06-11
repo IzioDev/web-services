@@ -2,6 +2,7 @@
 
 namespace App\Soap;
 
+use App\Entity\Product;
 use App\Entity\Secteur;
 use App\Entity\User;
 use Doctrine\ORM\EntityManager;
@@ -54,5 +55,24 @@ class SoapClass
         $soapCommand->setCreatedAt(date_format($commands[0]->getCreatedAt(), 'Y-m-d H:i:s'));
         $soapCommand->setId($commands[0]->getId());
         return $soapCommand;
+    }
+
+    /**
+     * Récupère la catégorie depuis l'id d'un produit
+     * @param int $id L'id du produit à chercher
+     * @return \App\Soap\CategorySoap La catégorie du produit trouvé
+     */
+    public function getCategorieFromProductId(int $id): \App\Soap\CategorySoap
+    {
+        $product = $this->_em->getRepository(Product::class)->findOneBy(["id" => $id]);
+        $category = $product->getCategory();
+
+        $soapCategorie = new CategorySoap();
+        $soapCategorie->setId($category->getId());
+        $soapCategorie->setImageUri($category->getImageUri());
+        $soapCategorie->setDescription($category->getDescription());
+        $soapCategorie->setLabel($category->getLabel());
+
+        return $soapCategorie;
     }
 }
