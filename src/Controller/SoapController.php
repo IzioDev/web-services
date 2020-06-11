@@ -22,7 +22,7 @@ class SoapController extends AbstractController
         $options= array(
             'trace'=>1,
             'encoding'  => 'UTF-8',
-            'uri' => 'http://nginx:800/soap',
+            'uri' => 'http://nginx:80/soap',
             'cache_wsdl' => 0,
             'exceptions' => true
         );
